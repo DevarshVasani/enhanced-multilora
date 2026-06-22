@@ -1,0 +1,12 @@
+[12:51:46] === PPO training (warm BC, robust eval, conservative) ===
+adaptive-oracle baseline mean_jct over eval specs = 38451
+warm-started from /tmp/nctl_bc2/bc_init.pt (source=bc_load_adaptive)
+ep=   1 rho=0.50 burst=1 mean_jct=49323 loss=0.000 ent=0.000 eval=
+ep=  10 rho=1.50 burst=1 mean_jct=59005 loss=202362.953 ent=0.282 eval=
+ep=  20 rho=0.50 burst=0 mean_jct=51209 loss=147656.047 ent=0.407 eval=43739.20599635533
+ep=  30 rho=1.50 burst=0 mean_jct=41268 loss=145343.859 ent=0.183 eval=
+ep=  40 rho=0.90 burst=0 mean_jct=49124 loss=347894.438 ent=0.470 eval=22898.923676990697
+ep=  50 rho=0.50 burst=1 mean_jct=44099 loss=50979.965 ent=0.090 eval=
+ep=  60 rho=0.90 burst=0 mean_jct=60797 loss=73799.703 ent=0.410 eval=18379.368145341767
+ep=  70 rho=0.90 burst=1 mean_jct=38944 loss=227301.953 ent=0.668 eval=
+ep=  80 rho=0.90 burst=1 mean_jct=47831 loss=187196.266 ent=0.640 eval=16570.64561137559

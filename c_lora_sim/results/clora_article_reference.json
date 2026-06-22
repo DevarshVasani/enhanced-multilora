@@ -1,0 +1,65 @@
+{
+  "_source": "Trajectory field note: Multi-LoRA Training for Continual Learning",
+  "_url": "https://trajectory.ai/field-notes/multi-lora-training-for-continual-learning",
+  "_hardware": "1x H200 node: 4 inference GPUs + 4 training GPUs, model=Qwen3-4B-Instruct-2507",
+  "_workload": "8 concurrent LoRA adapter-training experiments, 10 RL training steps each, GSM8K benchmark",
+  "_note": "Final=makespan(all done), Mean=mean JCT, First=first experiment completes (latency), Step=wall-clock per multiplexed step",
+
+  "table_4_3": {
+    "Serial_single_tenant_N1": {
+      "final_s": 15244, "final_x": 1.00,
+      "mean_s":   8575, "mean_x":  1.00,
+      "first_s":  1905, "first_x": 1.00,
+      "step_s":    191, "step_x":  1.00
+    },
+    "Serial_single_lora_N1_baseline": {
+      "final_s": 16395, "final_x": 1.08,
+      "mean_s":   9222, "mean_x":  1.08,
+      "first_s":  2049, "first_x": 1.08,
+      "step_s":    205, "step_x":  1.08,
+      "_note": "Single-LoRA (no sharing) vs multi-LoRA shared base — 8% overhead"
+    },
+    "Concurrent_multi_lora_N2": {
+      "final_s":  8818, "final_x": 1.73,
+      "mean_s":   5460, "mean_x":  1.57,
+      "first_s":  2103, "first_x": 0.91,
+      "step_s":    215, "step_x":  1.13,
+      "_note": "Ideal operating point per article: only 15% rollout overhead, low latency regression"
+    },
+    "Concurrent_multi_lora_N4": {
+      "final_s":  6131, "final_x": 2.49,
+      "mean_s":   4562, "mean_x":  1.88,
+      "first_s":  2992, "first_x": 0.64,
+      "step_s":    303, "step_x":  1.59
+    },
+    "Concurrent_multi_lora_N8": {
+      "final_s":  5433, "final_x": 2.81,
+      "mean_s":   5249, "mean_x":  1.63,
+      "first_s":  3758, "first_x": 0.51,
+      "step_s":    500, "step_x":  2.62,
+      "_note": "Max throughput point. First-experiment latency regresses 1.97x vs serial."
+    }
+  },
+
+  "step_decomposition_N8": {
+    "rollout_N1_s": 162, "rollout_N8_s": 401, "rollout_scaling": 2.47,
+    "training_scaling_N8": 3.81,
+    "_note": "3.81x is training SUB-STEP only. Full step = 500s (2.62x). Rollout = 77% of total increase."
+  },
+
+  "article_open_problems": [
+    "Dynamic load balancing across jobs (P1) — our scheduler's target",
+    "Scaling adapter concurrency beyond N=8 (P2)",
+    "Training-side multiplexing to frontier-scale models"
+  ],
+
+  "article_ideal_operating_point": "N=2: 15% rollout-time increase, 1.73x throughput speedup",
+
+  "our_calibration_correction": {
+    "old_anchors": [[1, 1.00], [4, 2.22], [8, 3.81]],
+    "old_step_time_N8_s": 727.7,
+    "new_anchors": [[1, 1.000], [2, 1.126], [4, 1.586], [8, 2.618]],
+    "new_step_time_N8_s": 500.0,
+    "bug": "Old calibration used training-sub-step scaling (3.81x) as full step time. Fixed to use article Table 4.3 step times directly."
+  }
+}

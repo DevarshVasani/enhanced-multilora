@@ -1,0 +1,28 @@
+seed=20000 asym=51264 unconstrained=37524 gap=+36.6%
+seed=20001 asym=51557 unconstrained=51557 gap=+0.0%
+seed=20002 asym=72522 unconstrained=12374 gap=+486.1%
+seed=20003 asym=47235 unconstrained=46731 gap=+1.1%
+seed=20004 asym=54628 unconstrained=54628 gap=+0.0%
+seed=20005 asym=48597 unconstrained=43086 gap=+12.8%
+seed=20006 asym=62947 unconstrained=36255 gap=+73.6%
+seed=20007 asym=58199 unconstrained=57966 gap=+0.4%
+seed=20008 asym=38806 unconstrained=21620 gap=+79.5%
+seed=20009 asym=52997 unconstrained=8582 gap=+517.5%
+seed=20010 asym=53318 unconstrained=13133 gap=+306.0%
+seed=20011 asym=54408 unconstrained=19755 gap=+175.4%
+seed=20012 asym=58691 unconstrained=11684 gap=+402.3%
+seed=20013 asym=65301 unconstrained=61803 gap=+5.7%
+seed=20014 asym=68503 unconstrained=20317 gap=+237.2%
+seed=20015 asym=71348 unconstrained=9620 gap=+641.7%
+seed=20016 asym=67970 unconstrained=67688 gap=+0.4%
+seed=20017 asym=46684 unconstrained=31919 gap=+46.3%
+seed=20018 asym=54040 unconstrained=19619 gap=+175.4%
+seed=20019 asym=61372 unconstrained=61372 gap=+0.0%
+
+=== preemption gap at rho=1.5, 20 seeds (95% bootstrap CI) ===
+aggregate (ratio of mean JCT, = the old 36.6% statistic): 65.9%  CI [31.5%, 122.3%]
+median per-seed gap (typical workload):                 59.9%  CI [3.4%, 206.3%]
+mean per-seed gap (tail-weighted):                      159.9%  CI [78.0%, 251.9%]
+distribution: min 0%  max 642%  <5%: 6/20 seeds  >150%: 8/20
+VERDICT: bimodal and workload-determined -- the value of free eviction is NOT a fixed fraction. Report the distribution, not a point estimate.
+wrote c_lora_sim/results/asymmetry_gap_ci.json

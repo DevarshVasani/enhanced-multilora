@@ -1,0 +1,45 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B",
+  "device": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "real_n1_step_ms": 64.6047742011433,
+  "tolerance": 0.15,
+  "step_scaling_validated": true,
+  "worst_residual": 0.10478526964648836,
+  "step_scaling_rows": [
+    {
+      "N": 1,
+      "meas_ms": 64.14669040168519,
+      "meas_scaling": 0.9929094435338186,
+      "pred_scaling": 1.0,
+      "residual": 0.007090556466181397
+    },
+    {
+      "N": 2,
+      "meas_ms": 65.12237385104527,
+      "meas_scaling": 1.008011786378054,
+      "pred_scaling": 1.126,
+      "residual": 0.10478526964648836
+    },
+    {
+      "N": 4,
+      "meas_ms": 95.54124439964653,
+      "meas_scaling": 1.4788573380379644,
+      "pred_scaling": 1.586,
+      "residual": 0.0675552723594172
+    },
+    {
+      "N": 8,
+      "meas_ms": 179.73928434948903,
+      "meas_scaling": 2.782136251879481,
+      "pred_scaling": 2.618,
+      "residual": 0.06269528337642526
+    }
+  ],
+  "padding_control_n8": {
+    "homo_short_ms": 64.64432770007988,
+    "homo_long_ms": 270.18938829933177,
+    "het_ms": 273.4129400996608,
+    "het_over_homo_long": 1.0119307120853975
+  },
+  "verdict": "step_scaling(N) is VALIDATED on real Qwen2.5-0.5B multi-LoRA within 15% (worst 10.5%). Heterogeneous-length co-location adds only PADDING-to-max-length cost (het/homo@long=1.01), an orthogonal effect the uniform-step simulator does not claim to model and which sequence packing removes. The co-location depth physics the controller reasons about are hardware-credible."
+}

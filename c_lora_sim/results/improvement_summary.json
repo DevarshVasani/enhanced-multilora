@@ -1,0 +1,44 @@
+{
+  "underloaded": {
+    "rl": 42614.841983317296,
+    "oracle": 42031.34087764995,
+    "load_adaptive": 42501.05466812517,
+    "pct_vs_oracle": -1.3882524170853223,
+    "pct_vs_load_adaptive": -0.26772821540699543
+  },
+  "light": {
+    "rl": 45994.39714710468,
+    "oracle": 46404.43589801464,
+    "load_adaptive": 46075.67264700366,
+    "pct_vs_oracle": 0.8836197293963939,
+    "pct_vs_load_adaptive": 0.1763956882879324
+  },
+  "critical": {
+    "rl": 48636.76063678686,
+    "oracle": 49147.18659168258,
+    "load_adaptive": 48949.20997624882,
+    "pct_vs_oracle": 1.0385659694752531,
+    "pct_vs_load_adaptive": 0.638313344819193
+  },
+  "critical_bursty": {
+    "rl": 41994.95027579701,
+    "oracle": 42002.6797483072,
+    "load_adaptive": 41907.97403243605,
+    "pct_vs_oracle": 0.018402331842888524,
+    "pct_vs_load_adaptive": -0.20754103573140226
+  },
+  "overloaded": {
+    "rl": 56141.57450688357,
+    "oracle": 57192.36040913791,
+    "load_adaptive": 59223.26076947714,
+    "pct_vs_oracle": 1.837283676940972,
+    "pct_vs_load_adaptive": 5.20350656575437
+  },
+  "overloaded_bursty": {
+    "rl": 43909.604877693666,
+    "oracle": 44317.10660335447,
+    "load_adaptive": 43900.30676526645,
+    "pct_vs_oracle": 0.9195133818369803,
+    "pct_vs_load_adaptive": -0.021180062537913186
+  }
+}

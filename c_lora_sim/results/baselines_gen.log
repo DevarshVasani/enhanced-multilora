@@ -1,0 +1,20 @@
+Tuning on rho=0.9, evaluating on UNSEEN rho=1.5
+
+  tuned lambda-controller on rho=0.9: lambda=1.0 (jct=49256)
+  tuned AIMD on rho=0.9: AIMD(ai=1.0,md=0.7,hi=0.5,lo=0.25) (jct=51182)
+  tuned threshold-hysteresis on rho=0.9: THR(up=0.75,down=0.5,step=1) (jct=53559)
+
+EVALUATION on unseen rho=1.5 (5 seeds):
+scheduler (tuned on 0.9)           jct@1.5   gap to oracle
+Fixed-N2                             63853           15.4%
+Fixed-N4                             59460            7.5%
+Fixed-N8                             70462           27.4%
+LoadAdaptive                         59759            8.0%
+AIMD [AIMD(ai=1.0,md=0.7,hi=0.5,lo=0.25)]     58745            6.2%
+ThresholdHyst [THR(up=0.75,down=0.5,step=1)]     62029           12.1%
+lambda-controller [lambda=1.0]       57736            4.4%
+ORACLE-asymmetric                    55320            0.0%
+
+GENERALIZATION: lambda-controller tuned on 0.9 -> 4.4% from oracle on unseen 1.5  (GENERALIZES (<10%)).
+vs AIMD (standard solution): 6.2% from oracle -> lambda-controller BEATS AIMD by 1.8 pts.
+wrote c_lora_sim/results/baselines_generalization.json

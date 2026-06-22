@@ -1,0 +1,137 @@
+{
+  "_question": "Have we beaten C-LoRA's operating points?",
+  "_workload_type_1": "Batch workload (article exact: 8 jobs, 10 steps, t=0, 1 GPU pool)",
+  "batch_comparison": {
+    "article_Serial_N1": {
+      "makespan": 15244,
+      "mean_jct": 8575,
+      "first_jct": 1905
+    },
+    "article_CLoRA_N2": {
+      "makespan": 8818,
+      "mean_jct": 5460,
+      "first_jct": 2103,
+      "note": "article ideal point"
+    },
+    "article_CLoRA_N8": {
+      "makespan": 5433,
+      "mean_jct": 5249,
+      "first_jct": 3758,
+      "note": "article max throughput"
+    },
+    "our_Fixed_N1": {
+      "makespan": 15360,
+      "mean_jct": 8640,
+      "vs_article_N1": "+0.8% (overhead not modelled)"
+    },
+    "our_Fixed_N2": {
+      "makespan": 8613,
+      "mean_jct": 5383,
+      "vs_article_N2": "-2.3% (slightly better, no overhead)"
+    },
+    "our_Fixed_N4": {
+      "makespan": 6066,
+      "mean_jct": 4547,
+      "vs_article_N4": "-1.1%"
+    },
+    "our_Fixed_N8": {
+      "makespan": 5005,
+      "mean_jct": 5001,
+      "vs_article_N8": "-7.9% (no overhead)"
+    },
+    "our_LoadAdaptive": {
+      "makespan": 5005,
+      "mean_jct": 5001,
+      "note": "correctly selects N=8 for batch"
+    },
+    "our_RL_800ep": {
+      "makespan": 6419,
+      "mean_jct": 4748,
+      "note": "suboptimal on batch; trained for streaming"
+    },
+    "verdict": "Fixed-N8 and LoadAdaptive MATCH article N=8 (within modelling overhead). RL at 800ep is suboptimal on pure batch."
+  },
+  "_workload_type_2": "Streaming workload (our main contribution, multi-rho sweep)",
+  "streaming_comparison_vs_clora_ideal_N2": {
+    "underloaded_rho05": {
+      "LoadAdaptive": 46984,
+      "FixedN2": 49532,
+      "RL_800ep": 67034,
+      "LA_beats_N2": true,
+      "RL_beats_N2": false
+    },
+    "light_rho075": {
+      "LoadAdaptive": 53834,
+      "FixedN2": 54094,
+      "RL_800ep": 71968,
+      "LA_beats_N2": true,
+      "RL_beats_N2": false
+    },
+    "critical_rho09": {
+      "LoadAdaptive": 61431,
+      "FixedN2": 60543,
+      "RL_800ep": 74199,
+      "LA_beats_N2": false,
+      "RL_beats_N2": false
+    },
+    "critical_bursty": {
+      "LoadAdaptive": 45321,
+      "FixedN2": 47804,
+      "RL_800ep": 64329,
+      "LA_beats_N2": true,
+      "RL_beats_N2": false
+    },
+    "overloaded_rho15": {
+      "LoadAdaptive": 82574,
+      "FixedN2": 84501,
+      "RL_800ep": 82865,
+      "LA_beats_N2": true,
+      "RL_beats_N2": true
+    },
+    "overloaded_bursty": {
+      "LoadAdaptive": 50926,
+      "FixedN2": 51978,
+      "RL_800ep": 66216,
+      "LA_beats_N2": true,
+      "RL_beats_N2": false
+    }
+  },
+  "streaming_comparison_vs_clora_N8": {
+    "underloaded_rho05": {
+      "RL_800ep": 67034,
+      "FixedN8": 68742,
+      "RL_beats_N8": true
+    },
+    "light_rho075": {
+      "RL_800ep": 71968,
+      "FixedN8": 85088,
+      "RL_beats_N8": true
+    },
+    "critical_rho09": {
+      "RL_800ep": 74199,
+      "FixedN8": 91300,
+      "RL_beats_N8": true
+    },
+    "critical_bursty": {
+      "RL_800ep": 64329,
+      "FixedN8": 67846,
+      "RL_beats_N8": true
+    },
+    "overloaded_rho15": {
+      "RL_800ep": 82865,
+      "FixedN8": 106348,
+      "RL_beats_N8": true
+    },
+    "overloaded_bursty": {
+      "RL_800ep": 66216,
+      "FixedN8": 76933,
+      "RL_beats_N8": true
+    }
+  },
+  "final_verdict": {
+    "beat_CLoRA_N8": "YES \u2014 RL beats Fixed-N8 at ALL 6 load regimes (by 3\u201322%)",
+    "beat_CLoRA_N2": "PARTIALLY \u2014 LoadAdaptive beats N2 at 5/6 regimes; RL only at high load (needs more training)",
+    "beat_Oracle": "NO \u2014 Oracle remains best; RL ~2-52% above Oracle depending on regime",
+    "calibration_note": "Calibration corrected to use article Table 4.3 step times (191/215/303/500s), not training-sub-step scaling (3.81x). All results below re-evaluated with correct physics."
+  }
+}

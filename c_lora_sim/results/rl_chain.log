@@ -1,0 +1,17 @@
+[12:29:22] === STAGE 1: BC warm-start (v3, GPU, 30k-sample cap) ===
+collecting BC samples from load-adaptive teacher across 12 workloads ...
+  202037 decision samples collected
+  subsampled to 30000 samples (--max-samples)
+epoch 1: ce_loss=0.0201 imitation_acc=0.995 eval_mean_jct=0
+epoch 2: ce_loss=0.0066 imitation_acc=0.999 eval_mean_jct=0
+epoch 3: ce_loss=0.0085 imitation_acc=0.999 eval_mean_jct=0
+epoch 4: ce_loss=0.0039 imitation_acc=0.999 eval_mean_jct=0
+saved /tmp/nctl_bc2/bc_init.pt
+[12:37:21] === STAGE 2: long PPO training (v3, GPU) ===
+adaptive-oracle baseline mean_jct over eval specs = 38451
+warm-started from /tmp/nctl_bc2/bc_init.pt (source=bc_load_adaptive)
+ep=   1 rho=0.50 burst=1 mean_jct=49323 loss=0.000 ent=0.000 eval=
+ep=  10 rho=1.50 burst=1 mean_jct=54037 loss=202311.969 ent=0.433 eval=
+ep=  20 rho=0.50 burst=0 mean_jct=48864 loss=93501.148 ent=0.374 eval=
+ep=  30 rho=1.50 burst=0 mean_jct=50777 loss=172752.516 ent=0.646 eval=
+ep=  40 rho=0.90 burst=0 mean_jct=48996 loss=295241.375 ent=0.703 eval=

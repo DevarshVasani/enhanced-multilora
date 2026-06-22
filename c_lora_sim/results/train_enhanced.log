@@ -1,0 +1,16 @@
+warm-started from c_lora_sim/models/bc_init.pt (source=bc_fixed_n8)
+ep=   1 jobs=40 ia=40 mean_jct=110335 loss=0.000 ent=0.000 eval=
+ep=  10 jobs=40 ia=120 mean_jct=89012 loss=0.227 ent=0.020 eval=
+ep=  20 jobs=80 ia=90 mean_jct=150929 loss=0.207 ent=0.022 eval=132061.23768528024
+ep=  30 jobs=40 ia=90 mean_jct=135862 loss=0.177 ent=0.110 eval=
+ep=  40 jobs=70 ia=120 mean_jct=133273 loss=0.096 ent=0.109 eval=129838.89029445959
+ep=  50 jobs=40 ia=60 mean_jct=95701 loss=0.094 ent=0.086 eval=
+ep=  60 jobs=40 ia=120 mean_jct=115645 loss=0.101 ent=0.098 eval=127866.25054356278
+ep=  70 jobs=60 ia=40 mean_jct=141212 loss=0.155 ent=0.192 eval=
+ep=  80 jobs=80 ia=40 mean_jct=131854 loss=0.181 ent=0.125 eval=128359.58995313846
+ep=  90 jobs=50 ia=120 mean_jct=129977 loss=0.099 ent=0.134 eval=
+ep= 100 jobs=60 ia=90 mean_jct=140091 loss=0.250 ent=0.109 eval=130256.3324677286
+ep= 110 jobs=70 ia=40 mean_jct=124589 loss=0.151 ent=0.181 eval=
+ep= 120 jobs=60 ia=90 mean_jct=120361 loss=0.101 ent=0.136 eval=131371.23213610513
+
+Best eval mean_jct: 127866.3

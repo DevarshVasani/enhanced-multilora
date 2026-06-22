@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1080" font-family="'JetBrains Mono','Fira Code',Consolas,monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3d4035"/>
+    </marker>
+    <style>
+      .ttl   { font-weight:700; fill:#fff; font-size:13px; letter-spacing:.5px; }
+      .mod   { font-weight:700; fill:#1f5c35; font-size:13px; }
+      .modA  { font-weight:700; fill:#7a4a0a; font-size:13px; }
+      .lab   { fill:#1a1c18; font-size:12px; }
+      .sub   { fill:#3d4035; font-size:11px; }
+      .tiny  { fill:#6b7060; font-size:10.5px; }
+      .edge  { fill:#3d4035; font-size:10.5px; font-style:italic; }
+      .flow  { stroke:#3d4035; stroke-width:1.6; fill:none; marker-end:url(#arrow); }
+      .box   { stroke:#adb49a; stroke-width:1.2; }
+      .pbox  { fill:#dff0cc; stroke:#3d6b2c; stroke-width:1.4; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="880" height="1080" fill="#f7f9e8"/>
+  <text x="440" y="26" text-anchor="middle" font-weight="700" font-size="16" fill="#1f5c35">RL-BSBF — End-to-End Scheduler Architecture</text>
+
+  <!-- workload -->
+  <rect class="box" x="150" y="44" width="580" height="64" rx="6" fill="#d3f0df" stroke="#3d6b2c"/>
+  <text x="170" y="66" class="mod">workload.py</text>
+  <text x="170" y="84" class="sub">target_rho ∈ {0.5,0.75,0.9,1.1,1.5} · MMPP burst/lull (crosses ρ=1) ·</text>
+  <text x="170" y="100" class="sub">short (5–30) / long (100–500) steps · skewed base mix Llama/Qwen/Mistral/Gemma</text>
+  <line class="flow" x1="440" y1="108" x2="440" y2="128"/>
+
+  <!-- CONTROL PLANE -->
+  <rect x="56" y="130" width="768" height="438" rx="8" fill="#eef1d8" stroke="#3d6b2c" stroke-width="2"/>
+  <rect x="56" y="130" width="768" height="28" rx="8" fill="#3d6b2c"/>
+  <rect x="56" y="146" width="768" height="12" fill="#3d6b2c"/>
+  <text x="72" y="149" class="ttl">CONTROL PLANE — control_plane.py</text>
+
+  <rect class="box" x="84" y="172" width="712" height="36" rx="5" fill="#ffffff"/>
+  <text x="100" y="195" class="lab"><tspan class="mod">PendingJobQueue</tspan>  —  10-oldest optimisation window (FIFO-bypass → SJF reorder)</text>
+  <line class="flow" x1="440" y1="208" x2="440" y2="224"/>
+
+  <rect class="box" x="84" y="226" width="712" height="36" rx="5" fill="#ffffff"/>
+  <text x="100" y="249" class="lab"><tspan class="mod">CandidateGenerator</tspan>  —  pack | spread | fresh | repurpose | migrate | wait</text>
+  <line class="flow" x1="440" y1="262" x2="440" y2="278"/>
+
+  <rect class="box" x="84" y="280" width="712" height="80" rx="5" fill="#ffffff"/>
+  <text x="100" y="300" class="lab"><tspan class="mod">feature_matrix</tspan> → [num_candidates × 23]</text>
+  <text x="100" y="318" class="tiny">0–2 job remaining/total steps, age (size, P3) · 3 depth N/16 · 4–5 step_scaling(N), speedup(N)</text>
+  <text x="100" y="334" class="tiny">6 cold cost · 7–12 mode one-hot · 13–15 base locality · 16–18 load signals (Th.1–2)</text>
+  <text x="100" y="350" class="tiny">19 mean cluster depth · 20–22 wait flag, GPU rem-steps, queue base-affinity</text>
+  <line class="flow" x1="440" y1="360" x2="440" y2="376"/>
+
+  <!-- policy -->
+  <rect class="pbox" x="84" y="378" width="712" height="178" rx="6"/>
+  <text x="100" y="398" class="mod">CandidateActorCritic  <tspan class="tiny" font-weight="400">(gpu_rl/policy.py — REUSED UNCHANGED)</tspan></text>
+  <text x="100" y="418" class="sub">LayerNorm → Linear(23→128) → GELU → +posenc → TransformerEncoder ×3</text>
+  <text x="100" y="434" class="tiny">d_model=128, heads=4, ff=512 — permutation-equivariant over the candidate SET</text>
+
+  <rect class="box" x="104" y="448" width="320" height="64" rx="5" fill="#ffffff" stroke="#3d6b2c"/>
+  <text x="120" y="470" class="lab" font-weight="700">Actor head (residual)</text>
+  <text x="120" y="488" class="sub">1 logit / candidate</text>
+  <text x="120" y="504" class="sub">→ Categorical π(a|s)</text>
+
+  <rect class="box" x="456" y="448" width="320" height="64" rx="5" fill="#ffffff" stroke="#3d6b2c"/>
+  <text x="472" y="470" class="lab" font-weight="700">Critic head</text>
+  <text x="472" y="488" class="sub">concat(mean-pool, max-pool) → V(s)</text>
+  <text x="472" y="504" class="sub">→ PPO advantage baseline</text>
+
+  <text x="440" y="540" text-anchor="middle" class="sub">argmax (eval) / sample (train) → chosen Candidate</text>
+
+  <line class="flow" x1="440" y1="568" x2="440" y2="596"/>
+  <text x="452" y="586" class="edge">place / migrate / wait</text>
+
+  <!-- DATA PLANE -->
+  <rect x="56" y="598" width="768" height="150" rx="8" fill="#eef1d8" stroke="#7a4a0a" stroke-width="2"/>
+  <rect x="56" y="598" width="768" height="28" rx="8" fill="#7a4a0a"/>
+  <rect x="56" y="614" width="768" height="12" fill="#7a4a0a"/>
+  <text x="72" y="617" class="ttl">DATA PLANE — data_plane.py  (calibrated physics)</text>
+  <text x="84" y="650" class="sub">• GPU pools warm for one base model; N-way SGMV co-location</text>
+  <text x="84" y="670" class="sub">• per-adapter rate = 1/step_time(N);  step_time 191→215→303→500 s @ N=1/2/4/8</text>
+  <text x="84" y="690" class="sub">• cold start 240 s reload · 0.5 s hot-swap · 10 s warm init · version-counted completions</text>
+  <text x="84" y="710" class="modA">• JITTER MODEL: step_time_cv, cold_start_cv → realized ≠ planned  <tspan class="tiny" fill="#6b7060">(sim-to-real test)</tspan></text>
+  <text x="84" y="732" class="tiny">calibration.py — every constant traced to C-LoRA Table 4.3</text>
+
+  <line class="flow" x1="440" y1="748" x2="440" y2="772"/>
+
+  <!-- reward -->
+  <rect class="box" x="150" y="774" width="580" height="50" rx="6" fill="#fdf0cc" stroke="#7a4a0a"/>
+  <text x="440" y="797" text-anchor="middle" class="lab" font-weight="700">reward  r_t = −(|pending| + |running|) · Δt / Z</text>
+  <text x="440" y="814" text-anchor="middle" class="tiny">Little's-Law surrogate — exact dense proxy for mean JCT</text>
+
+  <!-- branch -->
+  <path class="flow" d="M 360,824 C 360,846 255,846 255,866"/>
+  <path class="flow" d="M 520,824 C 520,846 625,846 625,866"/>
+
+  <rect class="box" x="84" y="868" width="342" height="70" rx="6" fill="#ffffff"/>
+  <text x="100" y="890" class="mod">bc_pretrain.py</text>
+  <text x="100" y="908" class="sub">BC warm-start from the</text>
+  <text x="100" y="924" class="sub">LoadAdaptive teacher (99.7% acc)</text>
+
+  <rect class="box" x="454" y="868" width="342" height="70" rx="6" fill="#ffffff"/>
+  <text x="470" y="890" class="mod">train_clora.py</text>
+  <text x="470" y="908" class="sub">PPO (gpu_rl/ppo.py — UNCHANGED)</text>
+  <text x="470" y="924" class="sub">ρ × burst curriculum, ~2000 episodes</text>
+
+  <path class="flow" d="M 255,938 C 255,958 440,958 440,978"/>
+  <path class="flow" d="M 625,938 C 625,958 440,958 440,978"/>
+
+  <!-- eval -->
+  <rect class="box" x="120" y="980" width="640" height="64" rx="6" fill="#d3f0df" stroke="#3d6b2c"/>
+  <text x="440" y="1002" text-anchor="middle" class="mod">evaluate_clora.py  +  critique_experiments.py</text>
+  <text x="440" y="1022" text-anchor="middle" class="sub">load sweep · oracle LADDER · jitter sensitivity · N&gt;8 extrapolation robustness</text>
+  <text x="440" y="1038" text-anchor="middle" class="tiny">8 seeds × 6 load regimes · mean ± 95% CI</text>
+</svg>

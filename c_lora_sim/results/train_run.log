@@ -1,0 +1,5 @@
+adaptive-oracle baseline mean_jct over eval specs = 38451
+warm-started from /tmp/nctl_bc/bc_init.pt (source=bc_load_adaptive)
+ep=   1 rho=0.50 burst=1 mean_jct=42933 loss=0.000 ent=0.000 eval=
+ep=  10 rho=1.50 burst=1 mean_jct=54211 loss=52069.766 ent=0.339 eval=
+ep=  20 rho=0.50 burst=0 mean_jct=46120 loss=424625.875 ent=0.705 eval=
